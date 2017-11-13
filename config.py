@@ -16,6 +16,5 @@
 # Please do not include this file if you plan to contribute to this repo to assure your storage account name and key are not inadvertantly shared
 #--------------------------------------------------------------------------
 
-STORAGE_ACCOUNT_NAME = ''
-STORAGE_ACCOUNT_KEY = ''
-IS_EMULATED = True
+IS_EMULATED = False
+STORAGE_CONNECTION_STRING = ''

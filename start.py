@@ -32,6 +32,7 @@ import azure.common
 from azure.storage import CloudStorageAccount
 from table_basic_samples import TableBasicSamples
 from table_advanced_samples import TableAdvancedSamples
+from tablestorageaccount import TableStorageAccount
 
 print('Azure Table Storage samples for Python')
 
@@ -40,10 +41,22 @@ print('Azure Table Storage samples for Python')
 if config.IS_EMULATED:
     account = CloudStorageAccount(is_emulated=True)
 else:
-    account_name = config.STORAGE_ACCOUNT_NAME
-    account_key = config.STORAGE_ACCOUNT_KEY
-    account = CloudStorageAccount(account_name, account_key)
+    account_connection_string = config.STORAGE_CONNECTION_STRING
+	# Split into key=value pairs removing empties, then split the pairs into a dict
+    config = dict(s.split('=', 1) for s in account_connection_string.split(';') if s)
 
+    # Authentication
+    account_name = config.get('AccountName')
+    account_key = config.get('AccountKey')
+    # Basic URL Configuration
+    endpoint_suffix = config.get('EndpointSuffix')
+    if endpoint_suffix == None:
+       table_endpoint  = config.get('TableEndpoint')
+       table_prefix = '.table.'
+       start_index = table_endpoint.find(table_prefix)
+       end_index = table_endpoint.endswith(':') and len(table_endpoint) or table_endpoint.rfind(':')
+       endpoint_suffix = table_endpoint[start_index+len(table_prefix):end_index]
+    account = TableStorageAccount(account_name = account_name, connection_string = account_connection_string, endpoint_suffix=endpoint_suffix)
 #Basic Table samples
 print ('---------------------------------------------------------------')
 print('Azure Storage Table samples')
