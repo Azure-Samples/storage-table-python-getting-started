@@ -14,19 +14,6 @@
 # places, or events is intended or should be inferred.
 #--------------------------------------------------------------------------
 
-#This sample can be run using either the Azure Storage Emulator (Windows) or by updating the config.py file with your Storage account name and key.
-
-# To run the sample using the Storage Emulator:
-# 1. Download and install the Azure Storage Emulator https://azure.microsoft.com/en-us/downloads/ 
-# 2. Start the emulator (once only) by pressing the Start button or the Windows key and searching for it by typing "Azure Storage Emulator". Select it from the list of applications to start it.
-# 3. Run the project. 
-
-# To run the sample using the Storage Service
-# 1. Open the config.py file and set IS_EMULATED to false.
-# 2. Create a Storage Account through the Azure Portal and provide your STORAGE_ACCOUNT_NAME and STORAGE_ACCOUNT_KEY in the config.py file. See https://azure.microsoft.com/en-us/documentation/articles/storage-create-storage-account/ for more information.
-# 3. Set breakpoints and run the project. 
-#---------------------------------------------------------------------------
-
 import config
 import azure.common
 from azure.storage import CloudStorageAccount
