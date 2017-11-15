@@ -39,7 +39,7 @@ print('Azure Table Storage samples for Python')
 # Create the storage account object and specify its credentials 
 # to either point to the local Emulator or your Azure subscription
 if config.IS_EMULATED:
-    account = CloudStorageAccount(is_emulated=True)
+    account = TableStorageAccount(is_emulated=True)
 else:
     account_connection_string = config.STORAGE_CONNECTION_STRING
 	# Split into key=value pairs removing empties, then split the pairs into a dict
