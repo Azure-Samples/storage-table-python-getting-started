@@ -15,7 +15,9 @@
 #--------------------------------------------------------------------------
 import config
 import datetime
+import time
 from random_data import RandomData
+from tablestorageaccount import TableStorageAccount
 from azure.storage import CloudStorageAccount, AccessPolicy
 from azure.storage.table import TableService, Entity, TablePermissions
 from azure.storage.models import CorsRule, Logging, Metrics, RetentionPolicy, ResourceTypes, AccountPermissions
@@ -45,14 +47,15 @@ class TableAdvancedSamples():
         print('\n\n* List tables *\n')
         self.list_tables(table_service)
         
-        print('\n\n* Set service properties *\n')
-        self.set_service_properties(table_service)
+        if not account.is_azure_cosmosdb_table():
+           print('\n\n* Set service properties *\n')
+           self.set_service_properties(table_service)
         
-        print('\n\n* Set Cors rules *\n')
-        self.set_cors_rules(table_service)
+           print('\n\n* Set Cors rules *\n')
+           self.set_cors_rules(table_service)
         
-        print('\n\n* ACL operations *\n')
-        self.table_acl_operations(table_service)
+           print('\n\n* ACL operations *\n')
+           self.table_acl_operations(table_service)
         
         if (config.IS_EMULATED):
             print('\n\n* Shared Access Signature is not supported in emulator *\n')
@@ -181,7 +184,7 @@ class TableAdvancedSamples():
                 TablePermissions.QUERY + TablePermissions.ADD + TablePermissions.UPDATE + TablePermissions.DELETE, 
                 datetime.datetime.utcnow() + datetime.timedelta(hours=1))
 
-            shared_account = CloudStorageAccount(account_name=account.account_name, sas_token=table_sas)
+            shared_account = TableStorageAccount(account_name=account.account_name, sas_token=table_sas, endpoint_suffix=account.endpoint_suffix)
             shared_table_service = shared_account.create_table_service()
 
             # Create a sample entity to insert into the table
